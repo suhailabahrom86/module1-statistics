@@ -4168,6 +4168,29 @@ html[data-theme="dark"] .headline-link:hover{
   line-height:1;
 }
 
+
+.headline-nav a.headline-link{
+  text-decoration:none;
+}
+.headline-nav a.headline-link:hover{
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+
+
+.headline-nav a.headline-link{
+  display:inline-flex;
+  align-items:center;
+  color:var(--ink);
+  text-decoration:none;
+  cursor:pointer;
+}
+.headline-nav a.headline-link:hover{
+  color:var(--royal);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+
 </style>
 </head>
 <body>
@@ -4182,7 +4205,7 @@ html[data-theme="dark"] .headline-link:hover{
       <span>Statistics &amp; Proabability</span>
     </div>
     <nav class="headline-nav" aria-label="Main navigation">
-      <button type="button" class="headline-link" onclick="history.back()">← Back to StatXplore</button>
+      <a class="headline-link" href="https://suhailabahrom86.github.io/statxplore/" target="_blank" rel="noopener noreferrer" aria-label="Back to StatXplore">← Back to StatXplore</a>
       <span class="headline-sep" aria-hidden="true">|</span>
       <button type="button" class="headline-link" onclick="openDashboard()">Module Home</button>
       <span class="headline-sep" aria-hidden="true">|</span>
@@ -11090,8 +11113,6 @@ function printSampleReportAsPDF(){
     doPrint();
   }
 }
-
-
 
 </script>
 
