@@ -673,6 +673,8 @@ label.field-label small{
 .dashboard-hero p{
   color:rgba(255,255,255,.9);
   font-size:1.07rem;
+  text-align:justify;
+  text-justify:inter-word;
 }
 
 .hero-meta{
@@ -4531,6 +4533,143 @@ const CERT_LECTURER_SIGNATURE = 'data:image/webp;base64,UklGRtYFAABXRUJQVlA4IMoF
 }
 .certificate-lock-note.show{display:block;}
 
+
+
+/* =========================================================
+   LEVELS OF MEASUREMENT · INTERACTIVE NOTES + QUICK CHECK
+   ========================================================= */
+.measurement-shell{display:grid;gap:1.15rem;}
+.measurement-intro{padding:1.1rem 1.2rem;border:1px solid var(--border);border-radius:20px;background:linear-gradient(135deg,rgba(139,14,45,.06),rgba(81,46,95,.06),rgba(37,64,143,.07));}
+.measurement-intro h3{margin:.05rem 0 .45rem;color:var(--purple);}
+.measurement-intro p{margin:.25rem 0;}
+.measurement-noir{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem;align-items:stretch;}
+.measurement-noir-step{position:relative;padding:1rem .8rem;border:1px solid var(--border);border-radius:18px;background:#fff;text-align:center;box-shadow:0 8px 20px rgba(48,45,88,.06);}
+.measurement-noir-step:not(:last-child)::after{content:'→';position:absolute;right:-.65rem;top:50%;transform:translateY(-50%);z-index:2;width:1.3rem;height:1.3rem;display:grid;place-items:center;border-radius:50%;background:var(--page);color:var(--royal);font-weight:900;}
+.measurement-letter{width:42px;height:42px;margin:0 auto .55rem;display:grid;place-items:center;border-radius:14px;color:#fff;font-size:1.2rem;font-weight:900;background:linear-gradient(135deg,var(--maroon),var(--purple),var(--royal));}
+.measurement-noir-step strong{display:block;color:var(--purple);}
+.measurement-noir-step span{display:block;margin-top:.25rem;color:var(--muted);font-size:.86rem;}
+.measurement-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.85rem;}
+.measurement-card{appearance:none;width:100%;min-height:165px;padding:1rem;border:1px solid var(--border);border-top:5px solid var(--measurement-accent,var(--royal));border-radius:18px;background:#fff;color:var(--ink);text-align:left;cursor:pointer;box-shadow:0 9px 22px rgba(48,45,88,.06);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;}
+.measurement-card:hover,.measurement-card:focus-visible{transform:translateY(-3px);box-shadow:0 14px 28px rgba(48,45,88,.11);outline:none;}
+.measurement-card.active{border-color:var(--measurement-accent,var(--royal));box-shadow:0 0 0 3px rgba(37,64,143,.10),0 14px 28px rgba(48,45,88,.10);}
+.measurement-card h3{margin:.15rem 0 .45rem;color:var(--purple);font-size:1.1rem;}
+.measurement-card p{margin:.2rem 0;color:var(--muted);font-size:.9rem;line-height:1.5;}
+.measurement-card .measure-tag{display:inline-flex;margin-top:.6rem;padding:.28rem .55rem;border-radius:999px;background:var(--soft-blue);color:var(--royal);font-size:.76rem;font-weight:850;}
+.measurement-detail{min-height:175px;padding:1.1rem 1.2rem;border:1px solid var(--border);border-left:6px solid var(--royal);border-radius:18px;background:linear-gradient(135deg,#fff,#f8f9ff);}
+.measurement-detail h3{margin:.05rem 0 .4rem;color:var(--purple);}
+.measurement-detail p{margin:.35rem 0;}
+.measurement-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.8rem;}
+.measurement-detail-item{padding:.75rem .85rem;border:1px solid var(--border);border-radius:13px;background:#fff;}
+.measurement-detail-item strong{display:block;color:var(--purple);margin-bottom:.18rem;}
+.measurement-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:16px;}
+.measurement-table{min-width:690px;margin:0;}
+.measurement-table th,.measurement-table td{text-align:center;}
+.measurement-table th:first-child,.measurement-table td:first-child{text-align:left;font-weight:800;}
+.measurement-quickcheck{padding:1.15rem;border:1px solid var(--border);border-radius:22px;background:linear-gradient(180deg,#fff,#fbfbff);box-shadow:0 12px 28px rgba(48,45,88,.06);}
+.measurement-quickcheck-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;}
+.measurement-quickcheck-head h3{margin:.05rem 0 .3rem;color:var(--purple);}
+.measurement-score{display:none;padding:.55rem .8rem;border-radius:999px;background:var(--soft-blue);color:var(--royal);font-weight:900;white-space:nowrap;}
+.measurement-score.show{display:inline-flex;}
+.measurement-question{padding:1rem;border:1px solid var(--border);border-radius:16px;background:#fff;margin-bottom:.85rem;}
+.measurement-question.correct{border-color:#2e8b68;background:#f2fbf7;}
+.measurement-question.incorrect{border-color:#b3264d;background:#fff5f7;}
+.measurement-q-title{display:flex;gap:.7rem;align-items:flex-start;margin-bottom:.7rem;}
+.measurement-q-number{width:32px;height:32px;min-width:32px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,var(--maroon),var(--royal));color:#fff;font-weight:900;}
+.measurement-q-title strong{color:var(--ink);line-height:1.45;}
+.measurement-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.55rem;}
+.measurement-option{border:1px solid var(--border);border-radius:12px;padding:.65rem .75rem;background:#fbfbfe;color:var(--ink);font-weight:750;cursor:pointer;transition:.16s ease;}
+.measurement-option:hover:not(:disabled){background:var(--soft-blue);border-color:var(--bluegrey);}
+.measurement-option.selected{box-shadow:0 0 0 2px rgba(37,64,143,.12);border-color:var(--royal);}
+.measurement-option.correct-answer{color:#16523f;background:var(--soft-green);border-color:#67ad91;}
+.measurement-option.wrong-answer{color:#8d1e3a;background:#fff0f3;border-color:#d792a4;}
+.measurement-option:disabled{cursor:default;}
+.measurement-feedback{display:none;margin-top:.7rem;padding:.7rem .8rem;border-radius:11px;font-size:.92rem;font-weight:650;line-height:1.5;}
+.measurement-feedback.show{display:block;}
+.measurement-question.correct .measurement-feedback{background:var(--soft-green);color:#205d48;}
+.measurement-question.incorrect .measurement-feedback{background:var(--soft-yellow);color:#6d3c08;}
+.measurement-actions{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1rem;}
+.measurement-viz-wrap{padding:1.15rem;border:1px solid var(--border);border-radius:22px;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(248,248,255,.96));box-shadow:0 14px 30px rgba(48,45,88,.07);}
+.measurement-viz-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;}
+.measurement-viz-head h3{margin:.1rem 0 .2rem;color:var(--purple);}
+.measurement-viz-head p{margin:0;color:var(--muted);max-width:760px;}
+.measurement-viz-switch{display:flex;gap:.55rem;flex-wrap:wrap;}
+.measurement-viz-btn{appearance:none;border:1px solid var(--border);background:#fff;padding:.55rem .85rem;border-radius:999px;font-weight:800;color:var(--purple);cursor:pointer;transition:.18s ease;}
+.measurement-viz-btn:hover,.measurement-viz-btn:focus-visible{transform:translateY(-2px);box-shadow:0 10px 18px rgba(48,45,88,.08);outline:none;}
+.measurement-viz-btn.active{color:#fff;border-color:transparent;background:linear-gradient(135deg,var(--maroon),var(--purple),var(--royal));box-shadow:0 10px 20px rgba(71,60,150,.22);}
+.measurement-viz-grid{display:grid;grid-template-columns:320px 1fr;gap:1rem;align-items:stretch;}
+.measurement-feature-stack{display:flex;flex-direction:column;gap:.8rem;}
+.measurement-feature-card,.measurement-capability-box{padding:1rem;border:1px solid var(--border);border-radius:18px;background:#fff;}
+.measurement-feature-card h4,.measurement-capability-box h4{margin:.05rem 0 .7rem;color:var(--purple);}
+.measurement-feature-row{display:grid;grid-template-columns:110px 1fr auto;align-items:center;gap:.55rem;margin-bottom:.65rem;}
+.measurement-feature-label{font-weight:750;color:var(--ink);}
+.measurement-feature-meter{position:relative;height:12px;border-radius:999px;background:#eef0f8;overflow:hidden;}
+.measurement-feature-fill{position:absolute;inset:0 auto 0 0;width:16%;border-radius:999px;background:linear-gradient(135deg,var(--maroon),var(--purple),var(--royal));transition:width .28s ease;}
+.measurement-feature-row.inactive .measurement-feature-fill{width:16%;opacity:.25;}
+.measurement-feature-row.active .measurement-feature-fill{width:100%;opacity:1;}
+.measurement-feature-state{font-size:.84rem;font-weight:800;color:var(--muted);}
+.measurement-feature-row.active .measurement-feature-state{color:var(--royal);}
+.measurement-capability-list{display:flex;flex-wrap:wrap;gap:.55rem;}
+.measurement-capability-chip{padding:.45rem .7rem;border-radius:999px;background:var(--page);border:1px solid var(--border);font-size:.82rem;font-weight:750;color:var(--muted);}
+.measurement-capability-chip.active{background:linear-gradient(135deg,rgba(139,14,45,.09),rgba(37,64,143,.12));border-color:#c9d0ea;color:var(--purple);}
+.measurement-viz-stage{position:relative;padding:1rem;border:1px solid var(--border);border-radius:20px;background:linear-gradient(180deg,#fcfbff,#f5f7ff);min-height:360px;overflow:hidden;}
+.measurement-viz-stage::before{content:'';position:absolute;inset:auto -60px -120px auto;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(37,64,143,.14),transparent 68%);pointer-events:none;}
+.measurement-viz-stage::after{content:'';position:absolute;inset:0 0 auto auto;width:180px;height:180px;background:radial-gradient(circle,rgba(139,14,45,.08),transparent 72%);pointer-events:none;}
+.measurement-viz-badge{display:inline-flex;align-items:center;gap:.4rem;padding:.38rem .7rem;border-radius:999px;background:#fff;border:1px solid var(--border);font-size:.78rem;font-weight:800;color:var(--purple);margin-bottom:.75rem;}
+.measurement-scene{display:none;position:relative;z-index:1;}
+.measurement-scene.active{display:block;animation:measurementFade .24s ease;}
+@keyframes measurementFade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.measurement-scene h4{margin:.1rem 0 .15rem;color:var(--purple);font-size:1.1rem;}
+.measurement-scene p{margin:.15rem 0 .9rem;color:var(--muted);}
+.measurement-note{margin-top:.95rem;padding:.8rem .9rem;border-radius:14px;background:rgba(255,255,255,.82);border:1px dashed #d3d8ec;color:var(--ink);font-size:.92rem;line-height:1.55;}
+.measurement-pill-cloud{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:flex-start;min-height:170px;padding:.6rem 0;}
+.measurement-pill{display:inline-flex;align-items:center;justify-content:center;min-width:92px;padding:.9rem 1rem;border-radius:999px;color:#fff;font-weight:850;box-shadow:0 10px 22px rgba(48,45,88,.12);}
+.measurement-pill.maroon{background:linear-gradient(135deg,var(--maroon),#d24d79);}
+.measurement-pill.purple{background:linear-gradient(135deg,var(--purple),#7e5aa4);}
+.measurement-pill.mauve{background:linear-gradient(135deg,var(--mauve),#7f8ed8);}
+.measurement-pill.royal{background:linear-gradient(135deg,var(--royal),#4969d8);}
+.measurement-rank-stack{display:grid;gap:.65rem;max-width:360px;margin:0 auto;padding:.2rem 0 .4rem;}
+.measurement-rank-item{display:flex;align-items:center;justify-content:space-between;gap:.7rem;padding:.85rem 1rem;border-radius:16px;background:#fff;border:1px solid var(--border);box-shadow:0 10px 18px rgba(48,45,88,.06);}
+.measurement-rank-item .rank-label{font-weight:850;color:var(--purple);}
+.measurement-rank-bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--maroon),var(--royal));}
+.measurement-thermo-wrap{display:flex;align-items:flex-end;justify-content:center;gap:1rem;min-height:200px;padding:0 0 .35rem;}
+.measurement-thermo{position:relative;width:62px;height:180px;border-radius:32px;border:3px solid #cdd5ee;background:linear-gradient(180deg,#fff,#f5f7ff);display:flex;align-items:flex-end;justify-content:center;padding-bottom:28px;}
+.measurement-thermo::after{content:'';position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);width:78px;height:78px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#fff,rgba(255,255,255,.7) 25%,rgba(126,94,198,.95) 26%,rgba(69,97,215,.96) 78%);box-shadow:0 12px 24px rgba(48,45,88,.16);}
+.measurement-thermo-fill{width:22px;height:72%;border-radius:999px;background:linear-gradient(180deg,#ff85a4,var(--purple),var(--royal));box-shadow:0 0 0 4px rgba(113,97,206,.08);}
+.measurement-thermo-scale{display:flex;flex-direction:column;justify-content:space-between;height:188px;font-weight:800;color:var(--purple);}
+.measurement-axis{display:flex;align-items:flex-end;justify-content:space-around;gap:.5rem;min-height:190px;padding:.5rem .3rem .2rem;}
+.measurement-bar-col{display:flex;flex-direction:column;align-items:center;gap:.45rem;flex:1;}
+.measurement-bar{width:68px;border-radius:16px 16px 8px 8px;background:linear-gradient(180deg,var(--maroon),var(--purple),var(--royal));box-shadow:0 12px 24px rgba(48,45,88,.14);}
+.measurement-axis-mark{font-size:.84rem;font-weight:850;color:var(--muted);}
+.measurement-axis-label{font-size:.8rem;font-weight:700;color:var(--royal);}
+html[data-theme="dark"] .measurement-noir-step,
+html[data-theme="dark"] .measurement-card,
+html[data-theme="dark"] .measurement-detail,
+html[data-theme="dark"] .measurement-detail-item,
+html[data-theme="dark"] .measurement-quickcheck,
+html[data-theme="dark"] .measurement-question,
+html[data-theme="dark"] .measurement-option,
+html[data-theme="dark"] .measurement-viz-wrap,
+html[data-theme="dark"] .measurement-feature-card,
+html[data-theme="dark"] .measurement-capability-box,
+html[data-theme="dark"] .measurement-viz-stage,
+html[data-theme="dark"] .measurement-viz-btn,
+html[data-theme="dark"] .measurement-rank-item,
+html[data-theme="dark"] .measurement-note{background:#151A28;border-color:var(--border);}
+html[data-theme="dark"] .measurement-detail{background:linear-gradient(135deg,#151A28,#182239);}
+html[data-theme="dark"] .measurement-question.correct{background:#14271F;border-color:#3a8d6d;}
+html[data-theme="dark"] .measurement-question.incorrect{background:#301923;border-color:#a64c63;}
+html[data-theme="dark"] .measurement-option.correct-answer{background:#163127;color:#c9f0df;border-color:#4d9b79;}
+html[data-theme="dark"] .measurement-option.wrong-answer{background:#3a1a24;color:#ffd9e2;border-color:#a85a70;}
+html[data-theme="dark"] .measurement-noir-step:not(:last-child)::after{background:#0D111B;}
+html[data-theme="dark"] .measurement-viz-wrap{background:linear-gradient(180deg,#101525,#141a2b);}
+html[data-theme="dark"] .measurement-viz-stage{background:linear-gradient(180deg,#11182A,#0F1525);}
+html[data-theme="dark"] .measurement-viz-btn.active{border-color:transparent;}
+html[data-theme="dark"] .measurement-feature-meter{background:#0F1525;}
+html[data-theme="dark"] .measurement-capability-chip{background:#0F1525;border-color:var(--border);}
+html[data-theme="dark"] .measurement-capability-chip.active{background:linear-gradient(135deg,rgba(139,14,45,.22),rgba(37,64,143,.22));color:#f0eaff;}
+@media(max-width:900px){.measurement-card-grid,.measurement-noir{grid-template-columns:repeat(2,minmax(0,1fr));}.measurement-noir-step::after{display:none!important;}.measurement-options{grid-template-columns:repeat(2,minmax(0,1fr));}.measurement-viz-grid{grid-template-columns:1fr;}}
+@media(max-width:600px){.measurement-card-grid,.measurement-noir,.measurement-detail-grid,.measurement-options{grid-template-columns:1fr;}.measurement-card{min-height:auto;}.measurement-actions{flex-direction:column;}.measurement-actions .btn{width:100%;}.measurement-table{min-width:620px;}.measurement-viz-switch{display:grid;grid-template-columns:1fr 1fr;}.measurement-viz-btn{justify-content:center;text-align:center;}.measurement-feature-row{grid-template-columns:1fr;}.measurement-feature-state{justify-self:start;}.measurement-pill{min-width:74px;}.measurement-bar{width:52px;}}
+
 </style>
 
 <!-- Certificate PDF export libraries -->
@@ -4545,7 +4684,7 @@ const CERT_LECTURER_SIGNATURE = 'data:image/webp;base64,UklGRtYFAABXRUJQVlA4IMoF
   <div class="topbar-inner">
     <div class="brand">
       <div class="brand-mark brand-logo-mark"><img src="data:image/webp;base64,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" alt="Introduction to Statistics Module 1 logo"></div>
-      <span>Statistics &amp; Proabability</span>
+      <span>Statistics &amp; Probability</span>
     </div>
     <nav class="headline-nav" aria-label="Main navigation">
       <a class="headline-link" href="https://suhailabahrom86.github.io/statxplore/" target="_blank" rel="noopener noreferrer" aria-label="Back to StatXplore">← Back to StatXplore</a>
@@ -4676,6 +4815,7 @@ const CERT_LECTURER_SIGNATURE = 'data:image/webp;base64,UklGRtYFAABXRUJQVlA4IMoF
       <button class="side-link" data-nav="s5" onclick="showScreen('s5')">Descriptive & Inferential</button>
       <button class="side-link" data-nav="s6" onclick="showScreen('s6')">Basic Terminology</button>
       <button class="side-link" data-nav="s7" onclick="showScreen('s7')">Types of Data</button>
+      <button class="side-link" data-nav="s7m" onclick="showScreen('s7m')">Levels of Measurement</button>
       <button class="side-link" data-nav="s8" onclick="showScreen('s8')">Variable Example</button>
       <button class="side-link" data-nav="s9" onclick="showScreen('s9')">Sampling Techniques</button>
       <button class="side-link" data-nav="s10" onclick="showScreen('s10')">Sampling Practice</button>
@@ -5037,6 +5177,211 @@ const CERT_LECTURER_SIGNATURE = 'data:image/webp;base64,UklGRtYFAABXRUJQVlA4IMoF
 
           <div class="callout tip">
             <strong>Quick rule:</strong> Category or label → qualitative. Numerical value → quantitative. If quantitative, ask: <strong>counted or measured?</strong>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- SCREEN 7M: LEVELS OF MEASUREMENT -->
+      <section class="screen" id="s7m" data-title="Levels of Measurement">
+        <div class="screen-head">
+          <span class="eyebrow">Concept · Interactive Notes + Quick Check</span>
+          <h2>Levels of Measurement</h2>
+          <p>After identifying the type of data, ask a second question: <strong>how much information does the measurement scale provide?</strong></p>
+        </div>
+        <div class="screen-body">
+          <div class="measurement-shell">
+            <div class="measurement-intro">
+              <h3>Why do levels of measurement matter?</h3>
+              <p>A <strong>level of measurement</strong> describes how values are recorded and what comparisons are meaningful. The four levels are <strong>nominal, ordinal, interval and ratio</strong>.</p>
+              <p><strong>Useful connection:</strong> Nominal and ordinal data are usually categorical, while interval and ratio data are numerical.</p>
+            </div>
+
+            <div>
+              <span class="eyebrow">Memory Aid</span>
+              <h3 style="margin:.25rem 0 .75rem;">Remember <strong>NOIR</strong></h3>
+              <div class="measurement-noir" aria-label="NOIR levels of measurement progression">
+                <div class="measurement-noir-step"><div class="measurement-letter">N</div><strong>Nominal</strong><span>Name / category</span></div>
+                <div class="measurement-noir-step"><div class="measurement-letter">O</div><strong>Ordinal</strong><span>Order / rank</span></div>
+                <div class="measurement-noir-step"><div class="measurement-letter">I</div><strong>Interval</strong><span>Equal intervals</span></div>
+                <div class="measurement-noir-step"><div class="measurement-letter">R</div><strong>Ratio</strong><span>True zero</span></div>
+              </div>
+            </div>
+
+            <div>
+              <span class="eyebrow">Explore</span>
+              <h3 style="margin:.25rem 0 .75rem;">Click a level to explore</h3>
+              <div class="measurement-card-grid" id="measurementCards">
+                <button type="button" class="measurement-card active" style="--measurement-accent:var(--maroon)" data-level="nominal" onclick="selectMeasurementLevel('nominal',this)">
+                  <h3>Nominal</h3><p>Categories or labels with no natural order.</p><span class="measure-tag">Name only</span>
+                </button>
+                <button type="button" class="measurement-card" style="--measurement-accent:var(--purple)" data-level="ordinal" onclick="selectMeasurementLevel('ordinal',this)">
+                  <h3>Ordinal</h3><p>Categories that can be placed in a meaningful order.</p><span class="measure-tag">Name + order</span>
+                </button>
+                <button type="button" class="measurement-card" style="--measurement-accent:var(--mauve)" data-level="interval" onclick="selectMeasurementLevel('interval',this)">
+                  <h3>Interval</h3><p>Ordered numerical values with equal intervals but no true zero.</p><span class="measure-tag">Equal differences</span>
+                </button>
+                <button type="button" class="measurement-card" style="--measurement-accent:var(--royal)" data-level="ratio" onclick="selectMeasurementLevel('ratio',this)">
+                  <h3>Ratio</h3><p>Equal intervals with a meaningful, true zero.</p><span class="measure-tag">True zero</span>
+                </button>
+              </div>
+              <div class="measurement-detail" id="measurementDetail" aria-live="polite">
+                <h3>Nominal Level</h3>
+                <p>Nominal data place observations into <strong>different categories</strong>. There is no meaningful ranking between the categories.</p>
+                <div class="measurement-detail-grid">
+                  <div class="measurement-detail-item"><strong>Key feature</strong>Names, labels or categories only.</div>
+                  <div class="measurement-detail-item"><strong>Examples</strong>Blood group, marital status, type of transport.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="measurement-viz-wrap">
+              <div class="measurement-viz-head">
+                <div>
+                  <span class="eyebrow">Interactive Visualisation</span>
+                  <h3>See how information increases from Nominal to Ratio</h3>
+                  <p>Select a level below. The visualisation will show what kind of comparison becomes possible at that level.</p>
+                </div>
+                <div class="measurement-viz-switch" id="measurementVizSwitch">
+                  <button type="button" class="measurement-viz-btn active" data-level="nominal" onclick="showMeasurementVisual('nominal',this)">Nominal</button>
+                  <button type="button" class="measurement-viz-btn" data-level="ordinal" onclick="showMeasurementVisual('ordinal',this)">Ordinal</button>
+                  <button type="button" class="measurement-viz-btn" data-level="interval" onclick="showMeasurementVisual('interval',this)">Interval</button>
+                  <button type="button" class="measurement-viz-btn" data-level="ratio" onclick="showMeasurementVisual('ratio',this)">Ratio</button>
+                </div>
+              </div>
+              <div class="measurement-viz-grid">
+                <div class="measurement-feature-stack">
+                  <div class="measurement-feature-card">
+                    <h4>Information available</h4>
+                    <div class="measurement-feature-row active" data-feature="categories"><span class="measurement-feature-label">Categories</span><div class="measurement-feature-meter"><div class="measurement-feature-fill"></div></div><span class="measurement-feature-state">Yes</span></div>
+                    <div class="measurement-feature-row inactive" data-feature="order"><span class="measurement-feature-label">Order</span><div class="measurement-feature-meter"><div class="measurement-feature-fill"></div></div><span class="measurement-feature-state">No</span></div>
+                    <div class="measurement-feature-row inactive" data-feature="intervals"><span class="measurement-feature-label">Equal intervals</span><div class="measurement-feature-meter"><div class="measurement-feature-fill"></div></div><span class="measurement-feature-state">No</span></div>
+                    <div class="measurement-feature-row inactive" data-feature="zero"><span class="measurement-feature-label">True zero</span><div class="measurement-feature-meter"><div class="measurement-feature-fill"></div></div><span class="measurement-feature-state">No</span></div>
+                  </div>
+                  <div class="measurement-capability-box">
+                    <h4>At this level, you can...</h4>
+                    <div class="measurement-capability-list" id="measurementCapabilityList"></div>
+                  </div>
+                </div>
+                <div class="measurement-viz-stage">
+                  <div class="measurement-scene active" data-scene="nominal">
+                    <div class="measurement-viz-badge">Nominal · Label only</div>
+                    <h4>We can group items into categories</h4>
+                    <p>Nominal data tell us whether observations are the same or different, but not which one is greater.</p>
+                    <div class="measurement-pill-cloud" aria-label="Nominal categories">
+                      <div class="measurement-pill maroon">Bus</div>
+                      <div class="measurement-pill purple">Car</div>
+                      <div class="measurement-pill royal">Train</div>
+                      <div class="measurement-pill mauve">Plane</div>
+                    </div>
+                    <div class="measurement-note"><strong>Interpretation:</strong> These are just labels. We can count how many are in each category, but we cannot rank them meaningfully.</div>
+                  </div>
+                  <div class="measurement-scene" data-scene="ordinal">
+                    <div class="measurement-viz-badge">Ordinal · Rank is meaningful</div>
+                    <h4>We can put the categories in order</h4>
+                    <p>Ordinal data show relative position, but the gaps between ranks are not known to be equal.</p>
+                    <div class="measurement-rank-stack" aria-label="Ordinal ranking">
+                      <div class="measurement-rank-item"><span class="rank-label">Excellent</span><div class="measurement-rank-bar" style="width:100px"></div></div>
+                      <div class="measurement-rank-item"><span class="rank-label">Good</span><div class="measurement-rank-bar" style="width:80px"></div></div>
+                      <div class="measurement-rank-item"><span class="rank-label">Fair</span><div class="measurement-rank-bar" style="width:60px"></div></div>
+                      <div class="measurement-rank-item"><span class="rank-label">Poor</span><div class="measurement-rank-bar" style="width:40px"></div></div>
+                    </div>
+                    <div class="measurement-note"><strong>Interpretation:</strong> We know Excellent is higher than Good, but we do not know whether the jump from Good to Excellent equals the jump from Fair to Good.</div>
+                  </div>
+                  <div class="measurement-scene" data-scene="interval">
+                    <div class="measurement-viz-badge">Interval · Equal differences</div>
+                    <h4>We can compare the size of differences</h4>
+                    <p>Interval data have equal intervals, so differences are meaningful. However, zero does not mean “none”.</p>
+                    <div class="measurement-thermo-wrap" aria-label="Interval thermometer visual">
+                      <div class="measurement-thermo-scale"><span>30°C</span><span>20°C</span><span>10°C</span><span>0°C</span><span>-10°C</span></div>
+                      <div class="measurement-thermo"><div class="measurement-thermo-fill"></div></div>
+                    </div>
+                    <div class="measurement-note"><strong>Interpretation:</strong> The difference between 10°C and 20°C equals the difference between 20°C and 30°C, but 20°C is not “twice as hot” as 10°C.</div>
+                  </div>
+                  <div class="measurement-scene" data-scene="ratio">
+                    <div class="measurement-viz-badge">Ratio · True zero</div>
+                    <h4>We can compare both differences and ratios</h4>
+                    <p>Ratio data include a real zero point, so statements like “twice as much” are meaningful.</p>
+                    <div class="measurement-axis" aria-label="Ratio bar comparison">
+                      <div class="measurement-bar-col"><div class="measurement-bar" style="height:70px"></div><span class="measurement-axis-mark">10 kg</span><span class="measurement-axis-label">Bag A</span></div>
+                      <div class="measurement-bar-col"><div class="measurement-bar" style="height:140px"></div><span class="measurement-axis-mark">20 kg</span><span class="measurement-axis-label">Bag B</span></div>
+                      <div class="measurement-bar-col"><div class="measurement-bar" style="height:105px"></div><span class="measurement-axis-mark">15 kg</span><span class="measurement-axis-label">Bag C</span></div>
+                    </div>
+                    <div class="measurement-note"><strong>Interpretation:</strong> Because 0 kg means no weight, 20 kg really is twice as heavy as 10 kg.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <span class="eyebrow">Compare</span>
+              <h3 style="margin:.25rem 0 .75rem;">What information does each level provide?</h3>
+              <div class="measurement-table-wrap">
+                <table class="measurement-table">
+                  <thead><tr><th>Level</th><th>Categories</th><th>Ordered</th><th>Equal Intervals</th><th>True Zero</th><th>Example</th></tr></thead>
+                  <tbody>
+                    <tr><td>Nominal</td><td>✓</td><td>✗</td><td>✗</td><td>✗</td><td>Blood group</td></tr>
+                    <tr><td>Ordinal</td><td>✓</td><td>✓</td><td>✗</td><td>✗</td><td>Satisfaction level</td></tr>
+                    <tr><td>Interval</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>Temperature (°C)</td></tr>
+                    <tr><td>Ratio</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>Weight (kg)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="callout remember"><strong>Decision shortcut:</strong> Is it only a label? → <strong>Nominal</strong>. Can it be ranked? → <strong>Ordinal</strong>. Are equal differences meaningful? → <strong>Interval</strong>. Is there also a true zero? → <strong>Ratio</strong>.</div>
+            </div>
+
+            <div class="measurement-quickcheck" id="measurementQuickCheck">
+              <div class="measurement-quickcheck-head">
+                <div><span class="eyebrow">Quick Check</span><h3>Can you identify the level?</h3><p style="margin:.2rem 0;color:var(--muted);">Choose one answer for each situation. You will receive immediate feedback.</p></div>
+                <div class="measurement-score" id="measurementScore" aria-live="polite">Score: 0 / 4</div>
+              </div>
+
+              <div class="measurement-question" data-measure-q="1" data-answer="nominal">
+                <div class="measurement-q-title"><span class="measurement-q-number">1</span><strong>A researcher records students' blood groups: A, B, AB and O. What is the level of measurement?</strong></div>
+                <div class="measurement-options">
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'nominal')">Nominal</button>
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'ordinal')">Ordinal</button>
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'interval')">Interval</button>
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'ratio')">Ratio</button>
+                </div>
+                <div class="measurement-feedback" aria-live="polite"></div>
+              </div>
+
+              <div class="measurement-question" data-measure-q="2" data-answer="ordinal">
+                <div class="measurement-q-title"><span class="measurement-q-number">2</span><strong>Students rate a learning system as Very dissatisfied, Dissatisfied, Neutral, Satisfied or Very satisfied. What is the level?</strong></div>
+                <div class="measurement-options">
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'nominal')">Nominal</button>
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'ordinal')">Ordinal</button>
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'interval')">Interval</button>
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'ratio')">Ratio</button>
+                </div>
+                <div class="measurement-feedback" aria-live="polite"></div>
+              </div>
+
+              <div class="measurement-question" data-measure-q="3" data-answer="interval">
+                <div class="measurement-q-title"><span class="measurement-q-number">3</span><strong>Daily temperature is recorded in degrees Celsius. What is the level of measurement?</strong></div>
+                <div class="measurement-options">
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'nominal')">Nominal</button>
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'ordinal')">Ordinal</button>
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'interval')">Interval</button>
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'ratio')">Ratio</button>
+                </div>
+                <div class="measurement-feedback" aria-live="polite"></div>
+              </div>
+
+              <div class="measurement-question" data-measure-q="4" data-answer="ratio">
+                <div class="measurement-q-title"><span class="measurement-q-number">4</span><strong>The body weight of students is measured in kilograms. What is the level of measurement?</strong></div>
+                <div class="measurement-options">
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'nominal')">Nominal</button>
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'ordinal')">Ordinal</button>
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'interval')">Interval</button>
+                  <button type="button" class="measurement-option" onclick="answerMeasurementQuestion(this,'ratio')">Ratio</button>
+                </div>
+                <div class="measurement-feedback" aria-live="polite"></div>
+              </div>
+
+              <div class="measurement-actions"><button type="button" class="btn btn-light" onclick="resetMeasurementQuickCheck()">↻ Try Again</button></div>
+            </div>
           </div>
         </div>
       </section>
@@ -7618,7 +7963,7 @@ const CERT_LECTURER_SIGNATURE = 'data:image/webp;base64,UklGRtYFAABXRUJQVlA4IMoF
    SCREEN ORDER
    ========================================================= */
 const learningScreens = [
-  "s1","s2","s3","s4","s5","s6","s7","s8","s9","s10",
+  "s1","s2","s3","s4","s5","s6","s7","s7m","s8","s9","s10",
   "s11","s12","s13","s14","s15","s16","s17","s18","s19","s19k","s20",
   "s21","s22","s23","s24","s25","s26","s27","s28","s29","s30",
   "s31","s32","s33","s35"
@@ -11815,6 +12160,194 @@ document.addEventListener('keydown', function(event){
     const modal = document.getElementById('certificateModal');
     if(modal && modal.classList.contains('show')){ closeCertificate(); }
   }
+});
+
+
+
+/* =========================================================
+   LEVELS OF MEASUREMENT · INTERACTIVITY
+   ========================================================= */
+const measurementLevelContent = {
+  nominal:{
+    title:'Nominal Level',
+    description:'Nominal data place observations into <strong>different categories</strong>. There is no meaningful ranking between the categories.',
+    feature:'Names, labels or categories only.',
+    examples:'Blood group, marital status, type of transport.',
+    border:'var(--maroon)'
+  },
+  ordinal:{
+    title:'Ordinal Level',
+    description:'Ordinal data consist of categories that can be arranged in a <strong>meaningful order or rank</strong>, but the size of the difference between ranks is not known to be equal.',
+    feature:'Categories have order, but unequal or unknown gaps.',
+    examples:'Satisfaction level, class position, education level.',
+    border:'var(--purple)'
+  },
+  interval:{
+    title:'Interval Level',
+    description:'Interval data are numerical and have <strong>equal intervals</strong>, so differences are meaningful. However, zero is not a true absence of the quantity, so ratio statements are not meaningful.',
+    feature:'Ordered values + equal intervals + no true zero.',
+    examples:'Temperature in degrees Celsius, calendar year.',
+    border:'var(--mauve)'
+  },
+  ratio:{
+    title:'Ratio Level',
+    description:'Ratio data have all the properties of interval data and also have a <strong>true zero</strong>. This makes both differences and ratios meaningful.',
+    feature:'Ordered values + equal intervals + true zero.',
+    examples:'Height, weight, age, income, time taken.',
+    border:'var(--royal)'
+  }
+};
+
+function selectMeasurementLevel(level, button){
+  const info=measurementLevelContent[level];
+  const detail=document.getElementById('measurementDetail');
+  if(!info || !detail){ return; }
+  document.querySelectorAll('#measurementCards .measurement-card').forEach(function(card){card.classList.remove('active');});
+  const targetButton = button || document.querySelector(`#measurementCards .measurement-card[data-level="${level}"]`);
+  if(targetButton){ targetButton.classList.add('active'); }
+  detail.style.borderLeftColor=info.border;
+  detail.innerHTML=`<h3>${info.title}</h3><p>${info.description}</p><div class="measurement-detail-grid"><div class="measurement-detail-item"><strong>Key feature</strong>${info.feature}</div><div class="measurement-detail-item"><strong>Examples</strong>${info.examples}</div></div>`;
+  renderMeasurementVisual(level);
+}
+
+const measurementVisualData={
+  nominal:{
+    features:{categories:true,order:false,intervals:false,zero:false},
+    capabilities:[
+      {label:'Classify / label',active:true},
+      {label:'Count frequencies',active:true},
+      {label:'Rank observations',active:false},
+      {label:'Compare differences',active:false},
+      {label:'Compare ratios',active:false}
+    ]
+  },
+  ordinal:{
+    features:{categories:true,order:true,intervals:false,zero:false},
+    capabilities:[
+      {label:'Classify / label',active:true},
+      {label:'Rank observations',active:true},
+      {label:'Find medians / percentiles',active:true},
+      {label:'Compare equal gaps',active:false},
+      {label:'Compare ratios',active:false}
+    ]
+  },
+  interval:{
+    features:{categories:true,order:true,intervals:true,zero:false},
+    capabilities:[
+      {label:'Classify / label',active:true},
+      {label:'Rank observations',active:true},
+      {label:'Compare differences',active:true},
+      {label:'Add / subtract values',active:true},
+      {label:'Compare ratios',active:false}
+    ]
+  },
+  ratio:{
+    features:{categories:true,order:true,intervals:true,zero:true},
+    capabilities:[
+      {label:'Classify / label',active:true},
+      {label:'Rank observations',active:true},
+      {label:'Compare differences',active:true},
+      {label:'Compare ratios',active:true},
+      {label:'Meaningful zero',active:true}
+    ]
+  }
+};
+
+function renderMeasurementVisual(level){
+  const config=measurementVisualData[level];
+  if(!config){ return; }
+  document.querySelectorAll('#measurementVizSwitch .measurement-viz-btn').forEach(function(btn){
+    btn.classList.toggle('active', btn.dataset.level===level);
+  });
+  document.querySelectorAll('.measurement-scene').forEach(function(scene){
+    scene.classList.toggle('active', scene.dataset.scene===level);
+  });
+  ['categories','order','intervals','zero'].forEach(function(key){
+    const row=document.querySelector(`.measurement-feature-row[data-feature="${key}"]`);
+    if(!row){ return; }
+    const isActive=!!config.features[key];
+    row.classList.toggle('active',isActive);
+    row.classList.toggle('inactive',!isActive);
+    const state=row.querySelector('.measurement-feature-state');
+    if(state){ state.textContent=isActive?'Yes':'No'; }
+  });
+  const list=document.getElementById('measurementCapabilityList');
+  if(list){
+    list.innerHTML=config.capabilities.map(function(item){
+      return `<span class="measurement-capability-chip ${item.active?'active':''}">${item.label}</span>`;
+    }).join('');
+  }
+}
+
+function showMeasurementVisual(level, button){
+  renderMeasurementVisual(level);
+  selectMeasurementLevel(level, document.querySelector(`#measurementCards .measurement-card[data-level="${level}"]`));
+}
+
+const measurementFeedbackText={
+  1:{correct:'Correct. Blood group consists of categories with no natural ranking.',wrong:'Blood group is a set of labels or categories with no meaningful order, so the correct level is Nominal.'},
+  2:{correct:'Correct. The satisfaction categories have a meaningful order, but the gaps between categories are not necessarily equal.',wrong:'These categories can be ranked from very dissatisfied to very satisfied, so the correct level is Ordinal.'},
+  3:{correct:'Correct. Celsius temperature has equal intervals, but 0°C is not a true absence of temperature.',wrong:'Degrees Celsius have meaningful equal differences but no true zero, so the correct level is Interval.'},
+  4:{correct:'Correct. Weight has equal intervals and a true zero; for example, 80 kg is twice 40 kg.',wrong:'Weight has a meaningful zero and ratios are meaningful, so the correct level is Ratio.'}
+};
+
+function answerMeasurementQuestion(button, selected){
+  const question=button.closest('.measurement-question');
+  if(!question || question.dataset.answered==='yes'){ return; }
+  const correct=question.dataset.answer;
+  const qNo=question.dataset.measureQ;
+  const feedback=question.querySelector('.measurement-feedback');
+  const options=question.querySelectorAll('.measurement-option');
+  question.dataset.answered='yes';
+  question.dataset.correct=selected===correct?'yes':'no';
+  options.forEach(function(opt){
+    opt.disabled=true;
+    const val=(opt.getAttribute('onclick')||'').match(/answerMeasurementQuestion\(this,'([^']+)'\)/);
+    const optionValue=val?val[1]:'';
+    if(optionValue===correct){opt.classList.add('correct-answer');}
+  });
+  button.classList.add('selected');
+  if(selected===correct){
+    question.classList.add('correct');
+    if(feedback){feedback.textContent=measurementFeedbackText[qNo].correct;}
+  }else{
+    question.classList.add('incorrect');
+    button.classList.add('wrong-answer');
+    if(feedback){feedback.textContent=measurementFeedbackText[qNo].wrong;}
+  }
+  if(feedback){feedback.classList.add('show');}
+  updateMeasurementScore();
+}
+
+function updateMeasurementScore(){
+  const questions=Array.from(document.querySelectorAll('#measurementQuickCheck .measurement-question'));
+  const answered=questions.filter(function(q){return q.dataset.answered==='yes';});
+  const score=answered.filter(function(q){return q.dataset.correct==='yes';}).length;
+  const scoreBox=document.getElementById('measurementScore');
+  if(scoreBox && answered.length===questions.length){
+    scoreBox.textContent=`Score: ${score} / ${questions.length}`;
+    scoreBox.classList.add('show');
+  }
+}
+
+function resetMeasurementQuickCheck(){
+  document.querySelectorAll('#measurementQuickCheck .measurement-question').forEach(function(question){
+    delete question.dataset.answered;
+    delete question.dataset.correct;
+    question.classList.remove('correct','incorrect');
+    question.querySelectorAll('.measurement-option').forEach(function(opt){
+      opt.disabled=false;
+      opt.classList.remove('selected','correct-answer','wrong-answer');
+    });
+    const feedback=question.querySelector('.measurement-feedback');
+    if(feedback){feedback.textContent='';feedback.classList.remove('show');}
+  });
+  const scoreBox=document.getElementById('measurementScore');
+  if(scoreBox){scoreBox.textContent='Score: 0 / 4';scoreBox.classList.remove('show');}
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  renderMeasurementVisual('nominal');
 });
 
 </script>
