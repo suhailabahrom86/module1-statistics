@@ -26,7 +26,17 @@
   };
 </script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script>
+/* D3 fallback loader: changes library loading only; original visualisation code remains untouched. */
+(function(){
+  if(window.d3) return;
+  var s=document.createElement('script');
+  s.src='https://unpkg.com/d3@7.9.0/dist/d3.min.js';
+  s.async=false;
+  document.head.appendChild(s);
+})();
+</script>
 
 <style>
 
@@ -4674,6 +4684,44 @@ html[data-theme="dark"] .measurement-capability-chip.active{background:linear-gr
 
 <!-- Certificate PDF export libraries -->
 
+
+<style id="np2-styles">
+.np2-shell{margin-top:1.4rem;border:1px solid var(--border);border-radius:20px;overflow:hidden;background:#fff}
+.np2-intro{padding:1.15rem 1.2rem;background:linear-gradient(110deg,rgba(139,14,45,.07),rgba(81,46,95,.07),rgba(37,64,143,.07));border-bottom:1px solid var(--border)}
+.np2-intro h3{margin:.12rem 0 .35rem;color:var(--purple);font-size:1.35rem}.np2-intro p{margin:0;color:var(--muted);line-height:1.6}
+.np2-tabs{display:flex;gap:.55rem;flex-wrap:wrap;padding:1rem 1rem .25rem}.np2-tab{min-height:44px;flex:1 1 170px;border:1px solid var(--border);border-radius:999px;background:#fff;color:var(--purple);font-weight:850;padding:.65rem 1rem;cursor:pointer}
+.np2-tab.active{background:linear-gradient(90deg,var(--maroon),var(--purple),var(--royal));color:#fff;border-color:transparent}
+.np2-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);gap:1rem;padding:1rem}.np2-visual-card,.np2-notes-card{min-width:0;border:1px solid var(--border);border-radius:16px;background:#fff;padding:1rem}
+.np2-visual-head{display:flex;align-items:flex-start;justify-content:space-between;gap:.8rem;margin-bottom:.7rem}.np2-kicker{display:block;color:var(--maroon);font-size:.69rem;font-weight:900;letter-spacing:.08em}
+.np2-visual-head h4,.np2-notes-card h4,.np2-check h4{margin:.15rem 0;color:var(--purple)}.np2-count{padding:.3rem .55rem;border-radius:999px;background:var(--soft-blue);color:var(--royal);font-size:.75rem;font-weight:900;white-space:nowrap}
+.np2-stage{border:1px dashed #C8D0E2;border-radius:14px;padding:.9rem;background:linear-gradient(180deg,#FCFCFE,#F6F8FD)}.np2-pop-label{margin-bottom:.55rem;color:var(--purple);font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.05em}
+.np2-people{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:.5rem}.np2-person{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;border:2px solid #D8DEEA;background:#EEF2F8;color:#667188;font-size:.66rem;font-weight:900;transition:.22s ease}
+.np2-person.np2-picked{background:linear-gradient(135deg,var(--maroon),var(--purple));color:#fff;border-color:#fff;box-shadow:0 0 0 3px rgba(81,46,95,.12);transform:scale(1.07)}.np2-person.np2-muted{opacity:.35}
+.np2-action-note{margin-top:.8rem;padding:.7rem .8rem;border-radius:11px;background:#fff;border:1px solid var(--border);font-size:.84rem;color:var(--ink)}
+.np2-quota{margin-top:.75rem;padding:.75rem;border:1px solid var(--border);border-radius:12px;background:#fff}.np2-quota-title{font-size:.78rem;font-weight:900;color:var(--purple);margin-bottom:.35rem}
+.np2-quota-row{display:grid;grid-template-columns:65px 1fr 45px;gap:.5rem;align-items:center;margin:.42rem 0}.np2-quota-row span,.np2-quota-row b{font-size:.73rem;color:var(--ink)}.np2-quota-row>div{height:9px;background:#E7ECF5;border-radius:999px;overflow:hidden}.np2-quota-row i{display:block;height:100%;width:0;border-radius:999px;transition:width .35s ease}
+#np2-qA{background:var(--maroon)}#np2-qB{background:var(--royal)}#np2-qC{background:var(--mauve)}
+.np2-legend{display:flex;flex-wrap:wrap;gap:1rem;margin-top:.65rem;color:var(--muted);font-size:.75rem}.np2-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:.3rem}.np2-unselected-dot{background:#D8DEEA}.np2-selected-dot{background:var(--purple)}
+.np2-notes-card p{font-size:.9rem;line-height:1.55;color:var(--ink)}.np2-note-box{margin-top:.7rem;padding:.7rem .75rem;border-radius:11px;border-left:4px solid var(--royal);background:var(--soft-blue)}
+.np2-note-box.example{border-left-color:var(--mauve);background:var(--soft-purple)}.np2-note-box.caution{border-left-color:var(--warning);background:var(--soft-yellow)}.np2-note-box strong{display:block;margin-bottom:.12rem;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--purple)}.np2-note-box p{margin:0}
+.np2-check{margin:0 1rem 1rem;padding:1rem;border:1px solid var(--border);border-radius:16px;background:#fff}.np2-check-head{display:flex;align-items:flex-start;justify-content:space-between;gap:.8rem;flex-wrap:wrap}.np2-newq{border:1px solid var(--border);border-radius:999px;background:#fff;color:var(--royal);font-weight:800;min-height:40px;padding:.5rem .8rem;cursor:pointer}
+.np2-answers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem;margin-top:.7rem}.np2-answers button{min-height:44px;border:1px solid var(--border);border-radius:11px;background:#fff;color:var(--ink);font-weight:800;cursor:pointer}.np2-answers button.np2-correct{background:#24705A;color:#fff;border-color:#24705A}.np2-answers button.np2-wrong{background:#A61C3C;color:#fff;border-color:#A61C3C}
+.np2-feedback{min-height:1.35rem;margin-top:.65rem;font-size:.85rem;font-weight:750;color:var(--purple)}
+html[data-theme="dark"] .np2-shell,html[data-theme="dark"] .np2-visual-card,html[data-theme="dark"] .np2-notes-card,html[data-theme="dark"] .np2-check,html[data-theme="dark"] .np2-tab,html[data-theme="dark"] .np2-newq,html[data-theme="dark"] .np2-answers button,html[data-theme="dark"] .np2-action-note,html[data-theme="dark"] .np2-quota{background:#151A28;border-color:var(--border)}
+html[data-theme="dark"] .np2-stage{background:#111724;border-color:#46536D}html[data-theme="dark"] .np2-person{background:#20283A;border-color:#4A5770;color:#CFD5E4}html[data-theme="dark"] .np2-note-box{background:#182239}html[data-theme="dark"] .np2-note-box.example{background:#241A2C}html[data-theme="dark"] .np2-note-box.caution{background:#2A2416}
+@media(max-width:900px){.np2-layout{grid-template-columns:1fr}}@media(max-width:600px){.np2-people{grid-template-columns:repeat(6,minmax(0,1fr));gap:.38rem}.np2-layout{padding:.75rem}.np2-tabs{padding:.75rem .75rem .1rem}.np2-answers{grid-template-columns:1fr}.np2-check{margin:.75rem}.np2-person{font-size:.6rem}}
+</style>
+
+<style id="np2-snowball-layout">
+.np2-answers{grid-template-columns:repeat(4,minmax(0,1fr)) !important;}
+@media(max-width:780px){
+  .np2-answers{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+}
+@media(max-width:520px){
+  .np2-answers{grid-template-columns:1fr !important;}
+}
+</style>
+
 </head>
 <body>
 
@@ -5449,6 +5497,7 @@ html[data-theme="dark"] .measurement-capability-chip.active{background:linear-gr
           <div id="sampling-viz" style="width: 100%; min-height: 250px; border: 1px solid var(--border); border-radius: 12px; background: #faf9fc; position: relative; overflow: hidden; margin-bottom: 1rem;"></div>
           <p id="sampling-desc" style="text-align: center; font-weight: 600; color: var(--royal); min-height: 2.5rem; margin-bottom: 2rem;"></p>
 
+
           <div class="grid-2">
             <article class="card maroon">
               <h3>Probability Sampling</h3>
@@ -5456,9 +5505,98 @@ html[data-theme="dark"] .measurement-capability-chip.active{background:linear-gr
             </article>
             <article class="card purple">
               <h3>Non-Probability Sampling</h3>
-              <ul><li>Convenience</li><li>Quota</li><li>Judgment</li></ul>
+              <ul><li>Convenience</li><li>Quota</li><li>Judgment</li><li>Snowball</li></ul>
             </article>
           </div>
+
+          <!-- NEW: isolated non-probability sampling explorer -->
+          <section class="np2-shell" id="np2-shell">
+            <div class="np2-intro">
+              <span class="eyebrow">Interactive Notes + Visualisation</span>
+              <h3>Explore Non-Probability Sampling</h3>
+              <p>
+                Non-probability sampling does <strong>not</strong> use a random selection mechanism.
+                Explore how <strong>convenience</strong>, <strong>quota</strong> and
+                <strong>judgment</strong> sampling select participants differently.
+              </p>
+            </div>
+
+            <div class="np2-tabs" role="tablist" aria-label="Non-probability sampling techniques">
+              <button type="button" class="np2-tab active" data-np2-tech="convenience" aria-selected="true">Convenience</button>
+              <button type="button" class="np2-tab" data-np2-tech="quota" aria-selected="false">Quota</button>
+              <button type="button" class="np2-tab" data-np2-tech="judgment" aria-selected="false">Judgment</button>
+              <button type="button" class="np2-tab" data-np2-tech="snowball" aria-selected="false">Snowball</button>
+            </div>
+
+            <div class="np2-layout">
+              <div class="np2-visual-card">
+                <div class="np2-visual-head">
+                  <div>
+                    <span class="np2-kicker">HOW IS THE SAMPLE CHOSEN?</span>
+                    <h4 id="np2-title">Convenience Sampling</h4>
+                  </div>
+                  <span class="np2-count" id="np2-count">9 selected</span>
+                </div>
+
+                <div class="np2-stage">
+                  <div class="np2-pop-label">Population</div>
+                  <div class="np2-people" id="np2-people" aria-label="Population and selected sample"></div>
+                  <div class="np2-action-note" id="np2-action-note">Researcher chooses people who are easiest to reach.</div>
+
+                  <div class="np2-quota" id="np2-quota" hidden>
+                    <div class="np2-quota-title">Quota targets</div>
+                    <div class="np2-quota-row"><span>Group A</span><div><i id="np2-qA"></i></div><b>4 / 4</b></div>
+                    <div class="np2-quota-row"><span>Group B</span><div><i id="np2-qB"></i></div><b>3 / 3</b></div>
+                    <div class="np2-quota-row"><span>Group C</span><div><i id="np2-qC"></i></div><b>2 / 2</b></div>
+                  </div>
+                </div>
+
+                <div class="np2-legend">
+                  <span><i class="np2-dot np2-unselected-dot"></i> Population member</span>
+                  <span><i class="np2-dot np2-selected-dot"></i> Selected participant</span>
+                </div>
+              </div>
+
+              <aside class="np2-notes-card" aria-live="polite">
+                <span class="np2-kicker">INTERACTIVE NOTES</span>
+                <h4 id="np2-note-title">Convenience Sampling</h4>
+                <p id="np2-definition">Participants are selected because they are readily available or easy to reach.</p>
+
+                <div class="np2-note-box example">
+                  <strong>Example</strong>
+                  <p id="np2-example">A researcher surveys students who are already sitting in the cafeteria.</p>
+                </div>
+
+                <div class="np2-note-box method">
+                  <strong>Selection idea</strong>
+                  <p id="np2-method">Accessibility determines who enters the sample.</p>
+                </div>
+
+                <div class="np2-note-box caution">
+                  <strong>Remember</strong>
+                  <p id="np2-limit">The easiest people to reach may not represent the whole population.</p>
+                </div>
+              </aside>
+            </div>
+
+            <div class="np2-check">
+              <div class="np2-check-head">
+                <div>
+                  <span class="np2-kicker">QUICK CHECK</span>
+                  <h4>Can you identify the technique?</h4>
+                </div>
+                <button type="button" class="np2-newq" id="np2-newq">New Scenario</button>
+              </div>
+              <p id="np2-question">A researcher interviews the first students who enter the library because they are easy to approach.</p>
+              <div class="np2-answers">
+                <button type="button" data-np2-answer="convenience">Convenience</button>
+                <button type="button" data-np2-answer="quota">Quota</button>
+                <button type="button" data-np2-answer="judgment">Judgment</button>
+                <button type="button" data-np2-answer="snowball">Snowball</button>
+              </div>
+              <div class="np2-feedback" id="np2-feedback" aria-live="polite"></div>
+            </div>
+          </section>
         </div>
       </section>
 
@@ -12350,6 +12488,171 @@ document.addEventListener('DOMContentLoaded', function(){
   renderMeasurementVisual('nominal');
 });
 
+</script>
+
+
+<script id="np2-script">
+(function(){
+  "use strict";
+  function initNP2(){
+    var root=document.getElementById("np2-shell");
+    if(!root || root.dataset.ready==="1") return;
+    root.dataset.ready="1";
+
+    var data={
+      convenience:{title:"Convenience Sampling",definition:"Participants are selected because they are readily available or easy to reach.",example:"A researcher surveys students who are already sitting in the cafeteria.",method:"Accessibility determines who enters the sample.",limit:"The easiest people to reach may not represent the whole population.",action:"Researcher chooses people who are easiest to reach.",selected:[0,1,2,9,10,11,18,19,20]},
+      quota:{title:"Quota Sampling",definition:"The researcher sets target numbers for relevant groups and selects participants non-randomly until each quota is filled.",example:"A study needs 4 students from Group A, 3 from Group B and 2 from Group C; available students are recruited until all targets are reached.",method:"Group targets are fixed first; participants within each group are then recruited without random selection.",limit:"Groups are represented, but selection within each group is still non-random.",action:"Researcher fills predetermined group quotas.",selected:[0,3,6,9,13,16,19,25,31]},
+      judgment:{title:"Judgment Sampling",definition:"The researcher deliberately selects participants considered especially relevant or informative for the study.",example:"A study on peer mentoring selects only students who have already served as peer mentors.",method:"Researcher-defined criteria determine who is deliberately included.",limit:"The sample depends on the researcher’s judgement and may omit other relevant perspectives.",action:"Researcher deliberately selects people who meet a chosen criterion.",selected:[4,7,12,15,22,27,30,34]},
+      snowball:{title:"Snowball Sampling",definition:"Existing participants help the researcher identify or recruit other people who meet the study criteria.",example:"A researcher studying a hard-to-reach student community begins with a few eligible participants and asks them to recommend other eligible participants.",method:"Start with a small number of suitable participants; each participant then refers or connects the researcher to additional participants.",limit:"Because recruitment follows social networks, people with stronger connections may be over-represented while isolated individuals may be missed.",action:"Participants help recruit other eligible participants through referrals.",selected:[5,8,14,17,23,26,29,32,35]}
+    };
+
+    var scenarios=[
+      {q:"A researcher interviews the first students who enter the library because they are easy to approach.",a:"convenience"},
+      {q:"A survey requires 15 science and 15 arts students, and available students are recruited until both targets are filled.",a:"quota"},
+      {q:"A researcher studying leadership deliberately selects students with at least two years of leadership experience.",a:"judgment"},
+      {q:"A researcher begins with three eligible participants and asks each of them to recommend other eligible participants for the study.",a:"snowball"}
+    ];
+    var scenarioIndex=0;
+    var people=document.getElementById("np2-people");
+    if(!people) return;
+
+    var frag=document.createDocumentFragment();
+    for(var i=0;i<36;i++){
+      var node=document.createElement("div");
+      node.className="np2-person";
+      node.textContent=String(i+1);
+      node.setAttribute("aria-label","Population member "+(i+1));
+      frag.appendChild(node);
+    }
+    people.appendChild(frag);
+
+    function setText(id,value){var el=document.getElementById(id);if(el)el.textContent=value;}
+    function resetAnswers(){
+      root.querySelectorAll(".np2-answers button").forEach(function(btn){btn.disabled=false;btn.classList.remove("np2-correct","np2-wrong");});
+      setText("np2-feedback","");
+    }
+    function render(key){
+      var item=data[key]; if(!item)return;
+      root.querySelectorAll(".np2-tab").forEach(function(btn){
+        var active=btn.getAttribute("data-np2-tech")===key;
+        btn.classList.toggle("active",active);
+        btn.setAttribute("aria-selected",active?"true":"false");
+      });
+      setText("np2-title",item.title);setText("np2-note-title",item.title);setText("np2-definition",item.definition);
+      setText("np2-example",item.example);setText("np2-method",item.method);setText("np2-limit",item.limit);
+      setText("np2-action-note",item.action);setText("np2-count",item.selected.length+" selected");
+
+      var quota=document.getElementById("np2-quota");if(quota)quota.hidden=key!=="quota";
+      var nodes=people.querySelectorAll(".np2-person");
+      nodes.forEach(function(n){n.classList.remove("np2-picked");n.classList.add("np2-muted");});
+      item.selected.forEach(function(index){var n=nodes[index];if(n){n.classList.remove("np2-muted");n.classList.add("np2-picked");}});
+      ["A","B","C"].forEach(function(g){var bar=document.getElementById("np2-q"+g);if(bar)bar.style.width=key==="quota"?"100%":"0%";});
+    }
+
+    root.querySelectorAll(".np2-tab").forEach(function(btn){btn.addEventListener("click",function(){render(btn.getAttribute("data-np2-tech"));});});
+
+    function showScenario(){
+      var s=scenarios[scenarioIndex];
+      setText("np2-question",s.q);
+      var feedback=document.getElementById("np2-feedback");
+      if(feedback)feedback.dataset.answer=s.a;
+      resetAnswers();
+    }
+
+    var newQ=document.getElementById("np2-newq");
+    if(newQ)newQ.addEventListener("click",function(){scenarioIndex=(scenarioIndex+1)%scenarios.length;showScenario();});
+
+    root.querySelectorAll(".np2-answers button").forEach(function(btn){
+      btn.addEventListener("click",function(){
+        var feedback=document.getElementById("np2-feedback");
+        var correct=feedback?feedback.dataset.answer:"";
+        root.querySelectorAll(".np2-answers button").forEach(function(b){b.disabled=true;});
+        if(btn.getAttribute("data-np2-answer")===correct){
+          btn.classList.add("np2-correct");
+          setText("np2-feedback","Correct — the selection process matches this technique.");
+        }else{
+          btn.classList.add("np2-wrong");
+          var right=root.querySelector('.np2-answers button[data-np2-answer="'+correct+'"]');
+          if(right)right.classList.add("np2-correct");
+          setText("np2-feedback","Not quite. The correct technique is highlighted in green.");
+        }
+      });
+    });
+
+    render("convenience");
+    showScenario();
+  }
+
+  if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",initNP2,{once:true});}
+  else{initNP2();}
+})();
+</script>
+
+<script id="d3-visualisation-safety">
+(function(){
+  "use strict";
+
+  function d3Ready(){ return typeof window.d3 !== "undefined"; }
+
+  function showLoading(containerId, message){
+    var el=document.getElementById(containerId);
+    if(!el) return;
+    if(el.querySelector(".d3-safe-message")) return;
+    var msg=document.createElement("div");
+    msg.className="d3-safe-message";
+    msg.style.cssText="height:100%;min-height:180px;display:grid;place-items:center;text-align:center;padding:1rem;color:var(--purple);font-weight:700;background:linear-gradient(180deg,#fff,#f7f8fc);";
+    msg.textContent=message || "Loading interactive visualisation…";
+    el.appendChild(msg);
+  }
+
+  function clearLoading(containerId){
+    var el=document.getElementById(containerId);
+    if(!el) return;
+    var msg=el.querySelector(".d3-safe-message");
+    if(msg) msg.remove();
+  }
+
+  function waitForD3(callback, containerId){
+    if(d3Ready()){ clearLoading(containerId); callback(); return; }
+    showLoading(containerId,"Loading interactive visualisation…");
+    var attempts=0;
+    var timer=setInterval(function(){
+      attempts++;
+      if(d3Ready()){
+        clearInterval(timer);
+        clearLoading(containerId);
+        callback();
+      }else if(attempts>=40){
+        clearInterval(timer);
+        var el=document.getElementById(containerId);
+        if(el){
+          el.innerHTML='<div class="d3-safe-message" style="height:100%;min-height:180px;display:grid;place-items:center;text-align:center;padding:1rem;color:var(--purple);font-weight:700;">Interactive visualisation could not load in this preview. Please reopen the file or view it in a normal browser.</div>';
+        }
+      }
+    },100);
+  }
+
+  /* Capture the original functions without editing them. */
+  var originalDrawStatsViz=window.drawStatsViz;
+  var originalDrawSamplingViz=window.drawSamplingViz;
+  var originalDrawTermViz=window.drawTermViz;
+
+  if(typeof originalDrawStatsViz==="function"){
+    window.drawStatsViz=function(type){
+      waitForD3(function(){ originalDrawStatsViz(type); },"stats-viz");
+    };
+  }
+  if(typeof originalDrawSamplingViz==="function"){
+    window.drawSamplingViz=function(type){
+      waitForD3(function(){ originalDrawSamplingViz(type); },"sampling-viz");
+    };
+  }
+  if(typeof originalDrawTermViz==="function"){
+    window.drawTermViz=function(type,focusKey){
+      waitForD3(function(){ originalDrawTermViz(type,focusKey); },"term-viz");
+    };
+  }
+})();
 </script>
 
 </body>
